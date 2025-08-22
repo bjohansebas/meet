@@ -67,17 +67,16 @@ jobs:
       id: maker
       env:
         TEST_REPOS: ${{ github.repository != 'pkgjs/meet' && github.repository || 'pkgjs/meet,pkgjs/meet' }}
-        TEST_ORGS: ${{ github.repository != 'pkgjs/meet' && '' || 'pkgjs' }}
+        TEST_ORGS: ${{ github.repository != 'pkgjs/meet' && 'expressjs' || 'expressjs' }}
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         schedules: 2020-04-02T17:00:00.0Z/P1D
         issueTitle: 'Test Meeting <%= date.toZonedDateTimeISO("UTC").toPlainDate().toString() %>'
         createWithin: P2D
-        meetingLabels: test
+        meetingLabels: tc agenda
         agendaLabel: meeting-agenda-test
         meetingLink: https://github.com/pkgjs/meet
         createNotes: true
-        repos: ${{ env.TEST_REPOS }}
         orgs: ${{ env.TEST_ORGS }}
     - name: clean up issue
       run: node ./test/_close-issue.js ${{ secrets.GITHUB_TOKEN }} ${{ steps.maker.outputs.issueNumber }}
